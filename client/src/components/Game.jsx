@@ -55,8 +55,14 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this.getGameData(this.props.params.gamename);
-    this.getUsername();
+    if (this.props.params) {
+      this.getGameData(this.props.params.gamename);
+      this.getUsername();
+    }
+
+    if (this.state.game && this.state.game.gameStage === 'w') {
+      this.setState({game: {gameStage: 'waiting'}});
+    }
   }
 
   socketHandlers() {
@@ -127,11 +133,18 @@ class Game extends React.Component {
   }
 
   render() {
+    let stl;
+    if (this.props.route) {
+      stl = this.props.route.sendToLobby;
+    } else {
+      stl = this.props.sendToLobby;
+    }
+
     return (
       <div id="game">
         {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} user={this.state.username}/>}
         {this.state.game && this.state.username && this.state.game.gameStage === 'playing' && <PlayingGame game={this.state.game} user={this.state.username} handleResponse={this.handleResponse} handlePromptSubmission={this.handlePromptSubmission} handleJudgeSelection={this.handleJudgeSelection} handleReadyToMoveOn={this.handleReadyToMoveOn}/>}
-        {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={this.props.route.sendToLobby}/>}
+        {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={stl}/>}
       </div>
     )
   }

@@ -35,7 +35,7 @@ const GameWinner = (props) => {
     })
   }
 
-  console.log(winnerMessage);
+  // console.log(winnerMessage);
 
   return (
     <Col id="GameWinner">

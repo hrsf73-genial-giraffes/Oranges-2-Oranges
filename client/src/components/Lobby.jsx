@@ -22,8 +22,10 @@ class Lobby extends React.Component {
   }
 
   componentDidMount() {
-    this.getGames();
-    this.getUsername();
+    if (this.props.route) {
+      this.getGames();
+      this.getUsername();
+    }
   }
 
   getGames() {
@@ -58,15 +60,25 @@ class Lobby extends React.Component {
   }
 
   render() {
+    let stg;
+    // React router will pass props down through this.props.route
+    // So we check to see if the route property exists
+    // Else we assume we are testing and stg will reference this.props instead
+    if (this.props.route) {
+      stg = this.props.route.sendToGame;
+    } else {
+      stg = this.props.sendToGame;
+    }
+
     return (
 
       <Col id="lobby" sm={6} smOffset={3}>
         <PageHeader>Lobby</PageHeader>
-        {this.props.params.disconnectTimeOut && <PlayerDisconnected/>}
-        <CreateGame sendToGame={this.props.route.sendToGame}/>
-        {this.state.games && <YourGames games={this.state.games} username={this.state.username} sendToGame={this.props.route.sendToGame}/>}
+        {this.props.disconnectTimeOut && <PlayerDisconnected/>}
+        <CreateGame sendToGame={stg}/>
+        {this.state.games && <YourGames games={this.state.games} username={this.state.username} sendToGame={stg}/>}
         <h4>Current Games:</h4>
-        {this.state.games && <GameList games={this.state.games} sendToGame={this.props.route.sendToGame}/>}
+        {this.state.games && <GameList games={this.state.games} sendToGame={stg}/>}
       </Col>
       
     )

@@ -28,7 +28,7 @@ class Score extends React.Component {
         <tbody>
           <tr>
             {Object.keys(scores).map((username) =>
-              <td><b>{username}</b>: {scores[username]} </td>
+              <td key={username}><b>{username}</b>: {scores[username]} </td>
             )}
           </tr>
         </tbody>
