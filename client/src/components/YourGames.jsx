@@ -6,7 +6,7 @@ import { ListGroup } from 'react-bootstrap';
 
 const YourGames = (props) => {
   let yourGames = [];
-    props.games.map((game) => {if( (game.gameStage === 'waiting' || game.gameStage === 'playing') && game.players.includes(props.username)){ yourGames.push(game)}});
+    props.games.map((game) => {if( (game.gameStage === 'waiting' || game.gameStage === 'playing') && Array.prototype.includes.call(game.players, props.username)){ yourGames.push(game)}});
     // console.log(yourGames);
 
 
