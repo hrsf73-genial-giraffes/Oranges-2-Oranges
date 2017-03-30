@@ -132,6 +132,7 @@ io.on('connection', (socket) => {
     }).then(function () {
       return queries.retrieveGameInstance(gameName);
     }).then(function (game) {
+      console.log('in server, join game, before players.length check, game:', game);
     // then, check num of players in players list
       // if it's 4 and gameStage is waiting 
       if (game.players.length === 4 && game.gameStage === 'waiting') {
@@ -145,6 +146,7 @@ io.on('connection', (socket) => {
           })
         });
       } else {
+        console.log('in server, join game, in else, game:', game);
         io.to(gameName).emit('update waiting room', game);
       }
     }).catch(function(error) {
@@ -254,7 +256,7 @@ io.on('connection', (socket) => {
     .then(function(game) {
       var currentRound = game.currentRound;
       var Rounds = game.rounds.slice(0);
-      if (!Rounds[currentRound].ready.includes(username)) {
+      if (Rounds[currentRound].ready.indexOf(username) === -1) {
         Rounds[currentRound].ready.push(username);
         queries.updateRounds(gameName, Rounds)
         .then(function() {
