@@ -5,6 +5,8 @@ import ChatBox from './PlayingGameComponents/ChatBox.jsx';
 import { Col, PageHeader, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 
 const getStyle = (game, player) => {
+  console.log('getStyle host:', game.host);
+  console.log('getStyle user:', player)
   if (game.host === player) {
     return 'info';
   } else if (game.allReady) {
