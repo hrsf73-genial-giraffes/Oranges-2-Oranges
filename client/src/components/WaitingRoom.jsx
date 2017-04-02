@@ -17,28 +17,27 @@ const getStyle = (game, player) => {
 const WaitingRoom = (props) => {
 
   return (
-    <Col id='waiting-room'>
+    <div>
       <PageHeader>{props.game.gameName} <small>Waiting Room</small></PageHeader>
       <h3>Number of Players: {props.game.players.length}</h3>
       <br />
-      <h4>Current Players:</h4>
-      <Col sm={4} smOffset={4}>
-        <ListGroup>
-          {props.game.players.map( (player) => <ListGroupItem key={player} bsStyle={getStyle(props.game, player)}>{player}</ListGroupItem>)}
-        </ListGroup>
-      </Col>
-      <Col sm={6} smOffset={3}>
-        {props.game.host === props.user && <Button disabled={props.buttonDisabled} onClick={props.startGame}>Start Game!</Button>}
-        {props.game.host !== props.user && <Button onClick={props.signalReady}>Ready to play!</Button>}
-        <Rules/>
-        
-      </Col>
-      <Col id='chat'>
-        <ChatBox chats = {props.chats} handleChatSubmission = {props.handleChatSubmission}/>
+      <Col sm={5} smOffset={1} id='waiting-room'>
+        <h4>Current Players:</h4>
+        <Col sm={8} smOffset={2}>
+          <ListGroup>
+            {props.game.players.map( (player) => <ListGroupItem bsStyle={getStyle(props.game, player)}>{player}</ListGroupItem>)}
+          </ListGroup>
         </Col>
-    </Col>
-    
-
+        <Col sm={10} smOffset={1}>
+          {props.game.host === props.user && <Button disabled={props.buttonDisabled} onClick={props.startGame}>Start Game!</Button>}
+          {props.game.host !== props.user && <Button onClick={props.signalReady}>Ready to play!</Button>}
+          <Rules/>  
+        </Col>
+      </Col>
+      <Col sm={5} class="chatContainer">
+        <ChatBox chats={props.chats} handleChatSubmission={props.handleChatSubmission}/>
+      </Col>
+    </div>
   )
 }
 
